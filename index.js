@@ -1,4 +1,3 @@
-const express = require('express');
 const { chromium } = require('playwright');
 
 // Use environment variable for webhook URL, with a default value
