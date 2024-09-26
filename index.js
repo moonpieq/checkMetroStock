@@ -1,9 +1,6 @@
 const express = require('express');
 const { chromium } = require('playwright');
 
-const app = express();
-const port = process.env.PORT || 8080;
-
 // Use environment variable for webhook URL, with a default value
 const webhookUrl = process.env.WEBHOOK_URL || "https://api.day.app/default-key/";
 
@@ -50,10 +47,10 @@ const checkStock = async () => {
       const message = inStockItems.map(item => `iPhone in stock at ${item.url}`).join(', ');
       await makeGetRequest(webhookUrl + encodeURIComponent(message));
       console.log('Sent message to Bark:', message);
-      return { message: 'Stock check complete. Items found in stock.' };
+      return
     } else {
-      console.log('No items in stock');
-      return { message: 'Stock check complete. No items in stock.' };
+      console.log('Stock check complete. No items in stock.');
+      return
     }
   } catch (error) {
     console.error('Error in checkStock:', error);
@@ -61,23 +58,9 @@ const checkStock = async () => {
   } finally {
     if (browser) {
       await browser.close();
+      return
     }
   }
 };
 
-app.get('/', (req, res) => {
-  res.send('Stock checker is running. Use /check-stock to perform a stock check.');
-});
-
-app.get('/check-stock', async (req, res) => {
-  try {
-    const result = await checkStock();
-    res.json(result);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-app.listen(port, () => {
-  console.log(`Stock checker listening at http://localhost:${port}`);
-});
+await checkStock();
