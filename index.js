@@ -63,4 +63,4 @@ const checkStock = async () => {
   }
 };
 
-await checkStock();
+checkStock();
