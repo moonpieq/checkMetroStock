@@ -1,0 +1,13 @@
+{
+  "name": "metro-stock-checker",
+  "version": "1.0.0",
+  "description": "Check Metro stock using Playwright",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "playwright": "^1.33.0"
+  }
+}
