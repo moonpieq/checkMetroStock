@@ -4,7 +4,7 @@ WORKDIR /usr/src/app
 
 # Install Playwright
 RUN npx playwright install-deps chromium
-RUN npx playwrite install
+RUN npx playwright install
 
 # Install dependencies
 COPY package*.json ./
