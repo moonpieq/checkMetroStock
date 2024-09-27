@@ -21,6 +21,7 @@ const makeGetRequest = async (url) => {
 const checkStock = async () => {
   let browser;
   try {
+    console.log(webhookUrl);
     browser = await chromium.launch();
     const urls = [producUrl, producUrl2];
     const results = await Promise.all(urls.map(async (url) => {
@@ -31,11 +32,13 @@ const checkStock = async () => {
         const button = document.querySelector('button[data-testid="add-to-cart-button"]');
         if (button) {
           return !button.disabled && !button.classList.contains('mat-button-disabled');
+        } else {
+          console.log("Add to cart button not found")
         }
         return false;
       });
 
-      console.log(`Button status for ${url}: ${isButtonActive ? 'Active' : 'Inactive or not found'}`);
+      console.log(`Button status for ${url}: ${isButtonActive ? 'Active' : 'Inactive'}`);
       await page.close();
       return { url, isButtonActive };
     }));
