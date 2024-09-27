@@ -19,14 +19,16 @@ const makeGetRequest = async (url) => {
 };
 
 const checkStock = async () => {
+  console.log("Initiating check stock sequence");
   let browser;
   try {
-    console.log(webhookUrl);
     browser = await chromium.launch();
     const urls = [producUrl, producUrl2];
     const results = await Promise.all(urls.map(async (url) => {
       const page = await browser.newPage();
       await page.goto(url, { waitUntil: 'networkidle' });
+      await page.click('[id = "onetrust-reject-all-handler"]');
+      await page.click('.text-medium.text-tmo-gray75.font-weight-bold');
 
       const isButtonActive = await page.evaluate(() => {
         const button = document.querySelector('button[data-testid="add-to-cart-button"]');
