@@ -27,7 +27,10 @@ const checkStock = async () => {
     const results = await Promise.all(urls.map(async (url) => {
       const page = await browser.newPage();
       await page.goto(url, { waitUntil: 'networkidle' });
-      await page.click('[id = "onetrust-reject-all-handler"]');
+      if(await page.isVisible('[id = "onetrust-reject-all-handler"]')){
+        await page.click('[id = "onetrust-reject-all-handler"]');
+      }
+      
       await page.click('.text-medium.text-tmo-gray75.font-weight-bold');
 
       const isButtonActive = await page.evaluate(() => {
